@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GesturesSample.Views.DragandDropGesturesPage"
+             Title="DragandDrop Gestures">
+    <ContentPage.Content>
+
+         <Grid  RowDefinitions="*,*" RowSpacing="10" Padding="20">
+       <CollectionView Grid.Row="0"  x:Name="imageCollection"
+                        ItemsSource="{Binding ImageList}">
+           <CollectionView.ItemsLayout>
+               <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="10"/>
+           </CollectionView.ItemsLayout>
+           <CollectionView.ItemTemplate>
+               <DataTemplate>
+                    <Frame HasShadow="False" Padding="10" HeightRequest="200">
+               <VerticalStackLayout VerticalOptions="CenterAndExpand">
+                 <Image Source="{Binding ImageSource}" HeightRequest="80" WidthRequest="80">
+                     <Image.GestureRecognizers>
+                         <DragGestureRecognizer CanDrag="True"              
+                             DragStartingCommand="{Binding BindingContext.DragStartingCommand, Source={x:Reference imageCollection}}"
+                             DragStartingCommandParameter="{Binding .}"                />
+                         </Image.GestureRecognizers>
+                     </Image>
+                   <Label Text="{Binding ImageText}" HorizontalOptions="CenterAndExpand"/>
+               </VerticalStackLayout>
+                          </Frame>
+               </DataTemplate>
+               
+
+           </CollectionView.ItemTemplate>
+          
+
+       </CollectionView>
+             
+             <Frame BorderColor="{Binding FrameColor}" Grid.Row="1">
+                 <Grid>
+                     <Label HorizontalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="Blue"  VerticalOptions="CenterAndExpand" Text="Drag Happy Face Here"/>
+                  <Image Source="{Binding DraggedImage, Mode=TwoWay}"/> 
+                 </Grid>
+                 
+                 <Frame.GestureRecognizers>
+                     <DropGestureRecognizer AllowDrop="{Binding AllowDrop}" DropCommand="{Binding DropCommand}" />
+                 </Frame.GestureRecognizers>
+             </Frame>
+
+
+   </Grid>
+    </ContentPage.Content>
+
+</ContentPage>
